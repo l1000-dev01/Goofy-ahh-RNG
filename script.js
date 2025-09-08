@@ -5,9 +5,10 @@ const items = [
   { name: "Energetic Harvey", rarity: "Rare", chance: 10 },
   { name: "Conrads Mum", rarity: "Epic", chance: 7 },
   { name: "Sigma Boy", rarity: "Epic", chance: 5 },
-  { name: "Tung sahur", rarity: "Legendary", chance: 2 },
+  { name: "Dumb Owen", rarity: "Legendary", chance: 2 },
   { name: "Coolboy Alyan", rarity: "Legendary", chance: 1 },
-  { name: "Test Mythic", rarity: "Mythic", chance: 50 }
+  { name: "Molested Conrad", rarity: "Mythic", chance: 0.5 },
+  { name: "ZOINNNNN", rarity: "Mythic", chance: 0.4 }
 ];
 
 const rarities = {
