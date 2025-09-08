@@ -35,18 +35,23 @@ function getRandomItem() {
     roll -= item.chance;
   }
 
+  // Fallback in case floating point arithmetic causes issues, should return the first item
   return { ...items[0], normalizedChance: ((items[0].chance / total) * 100).toFixed(2) };
 }
 
 // Sparkles
 function createSparkles(parent, count = 10) {
+  // Clear any existing sparkles before adding new ones
+  parent.innerHTML = '';
+
   for (let i = 0; i < count; i++) {
     const sparkle = document.createElement("div");
     sparkle.className = "sparkle";
+    // Position within the sparkle-container
     sparkle.style.left = `${Math.random() * parent.offsetWidth}px`;
     sparkle.style.top = `${Math.random() * parent.offsetHeight}px`;
     parent.appendChild(sparkle);
-    setTimeout(() => sparkle.remove(), 1000);
+    setTimeout(() => sparkle.remove(), 1000); // Sparkles disappear after 1 second
   }
 }
 
@@ -55,7 +60,7 @@ function updateLeaderboard(word = null, rarity = null) {
   if (word) {
     leaderboard[word] = (leaderboard[word] || 0) + 1;
 
-    // Ensure bestWord is initialized correctly if it's the first word
+    // Ensure bestWord is initialized correctly if it's the first word or has missing properties
     if (!bestWord || !bestWord.rarity || rarities[rarity].rank > rarities[bestWord.rarity].rank) {
       bestWord = { word, rarity };
     }
@@ -67,30 +72,25 @@ function updateLeaderboard(word = null, rarity = null) {
   const lbDiv = document.getElementById("leaderboard");
   let html = "<h3>Leaderboard</h3>";
 
-  if (bestWord && bestWord.word && bestWord.rarity) { // Add checks for bestWord properties
+  // Display Best Word
+  if (bestWord && bestWord.word && bestWord.rarity) {
     const bestRarityInfo = rarities[bestWord.rarity];
-    if (bestRarityInfo) { // Ensure rarity info exists
+    if (bestRarityInfo) {
       html += `<div><strong>Best Word:</strong> <span class="${bestRarityInfo.class}">${bestWord.word} (${bestWord.rarity})</span></div>`;
     }
   }
 
-  // Sort the leaderboard and then build the list
+  // Display all leaderboard items, sorted by count
   const sortedWords = Object.keys(leaderboard).sort((a, b) => leaderboard[b] - leaderboard[a]);
 
   sortedWords.forEach(wordKey => {
-    // Safely find the item to get its rarity
     const itemInfo = items.find(i => i.name === wordKey);
-    if (itemInfo) { // Only display if the item is found
+    if (itemInfo) {
       const r = itemInfo.rarity;
       const rarityInfo = rarities[r];
-      if (rarityInfo) { // Ensure rarity info exists
+      if (rarityInfo) {
         html += `<div class="leaderboard-item ${rarityInfo.class}">${wordKey}: ${leaderboard[wordKey]}</div>`;
       }
-    } else {
-      // Optional: Handle words in localStorage that are no longer in 'items'
-      // console.warn(`Leaderboard contains an item not in current 'items' list: ${wordKey}`);
-      // If you want to display them anyway without rarity styling:
-      // html += `<div class="leaderboard-item">${wordKey}: ${leaderboard[wordKey]}</div>`;
     }
   });
 
@@ -101,16 +101,17 @@ function updateLeaderboard(word = null, rarity = null) {
 document.getElementById("generateBtn").addEventListener("click", () => {
   const item = getRandomItem();
   const rarityInfo = rarities[item.rarity];
-  const resultDiv = document.getElementById("result");
+  const itemDisplayDiv = document.getElementById("item-display");
+  const sparkleContainer = document.getElementById("sparkle-container");
 
-  resultDiv.innerHTML = `
+  itemDisplayDiv.innerHTML = `
     <span class="${rarityInfo.class} float">
       ${item.name} (${item.rarity}) - ${item.normalizedChance}% odds
     </span>
   `;
 
-  if (item.rarity === "Epic") createSparkles(resultDiv, 10);
-  if (item.rarity === "Legendary") createSparkles(resultDiv, 20);
+  if (item.rarity === "Epic") createSparkles(sparkleContainer, 10);
+  if (item.rarity === "Legendary") createSparkles(sparkleContainer, 20);
 
   updateLeaderboard(item.name, item.rarity);
 });
