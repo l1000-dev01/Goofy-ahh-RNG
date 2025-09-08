@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   color: #fff;
   display: flex;
   justify-content: center;
@@ -11,7 +11,7 @@ body {
 
 .container {
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(255, 255, 255, 0.05);
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 0 20px rgba(0,0,0,0.5);
@@ -37,8 +37,27 @@ button:hover {
   background-color: #0072ff;
 }
 
-#result {
+.result {
   margin-top: 1.5rem;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Rarity Colors */
+.common {
+  color: #a0a0a0;
+}
+
+.rare {
+  color: #00bfff;
+}
+
+.epic {
+  color: #a020f0;
+}
+
+.legendary {
+  color: #ffa500;
 }
