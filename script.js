@@ -1,6 +1,6 @@
 const items = [
-  { name: "Ancient Tome", rarity: "Common", chance: 30 },
-  { name: "Silver Arrow", rarity: "Common", chance: 30 },
+  { name: "Ancient Tome", rarity: "Common", chance: 50 },
+  { name: "Silver Arrow", rarity: "Common", chance: 25 },
   { name: "Shadow Cloak", rarity: "Rare", chance: 15 },
   { name: "Mystic Orb", rarity: "Rare", chance: 10 },
   { name: "Crystal Blade", rarity: "Epic", chance: 7 },
@@ -23,11 +23,21 @@ function getRandomItem() {
   let roll = Math.random() * total;
 
   for (let item of items) {
-    if (roll < item.chance) return item;
+    if (roll < item.chance) {
+      // calculate exact normalized odds
+      return {
+        ...item,
+        normalizedChance: ((item.chance / total) * 100).toFixed(2)
+      };
+    }
     roll -= item.chance;
   }
 
-  return items[0]; // fallback
+  // fallback (shouldn't hit)
+  return {
+    ...items[0],
+    normalizedChance: ((items[0].chance / total) * 100).toFixed(2)
+  };
 }
 
 document.getElementById("generateBtn").addEventListener("click", () => {
@@ -37,7 +47,7 @@ document.getElementById("generateBtn").addEventListener("click", () => {
 
   resultDiv.innerHTML = `
     <span class="${rarityInfo.class}">
-      ${item.name} (${item.rarity}) - ${item.chance}% odds
+      ${item.name} (${item.rarity}) - ${item.normalizedChance}% odds
     </span>
   `;
 });
