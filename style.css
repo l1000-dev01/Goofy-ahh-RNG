@@ -83,29 +83,63 @@ button:hover {
   color: #00bfff;
 }
 
+/* keep existing common/rare styles from before */
+
 .epic {
   color: #a020f0;
+  text-shadow: 0 0 2px #d080ff;
 }
 
 .legendary {
   color: #ffa500;
+  text-shadow: 0 0 2px #ffd700;
 }
 
-/* Floating animation applied to the rolled word */
+/* Floating animation for all */
 .float {
-  display: inline-block;           /* allows transforms without affecting layout */
+  display: inline-block;
   animation: floatY 3s ease-in-out infinite;
   will-change: transform;
-  -webkit-font-smoothing: antialiased; /* improves crispness on some browsers */
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Slightly faster float for Epic / Legendary to feel more lively */
+/* Slightly faster for Epic / Legendary */
 .epic.float { animation-duration: 2.6s; }
 .legendary.float { animation-duration: 2.2s; }
 
-/* Float keyframes: gentle vertical movement */
+/* Float keyframes */
 @keyframes floatY {
   0%   { transform: translateY(0); }
-  50%  { transform: translateY(-8px); } /* change -8px to -4px / -12px for smaller/larger float */
+  50%  { transform: translateY(-8px); }
   100% { transform: translateY(0); }
+}
+
+/* Sparkles for Epic/Legendary */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+  pointer-events: none;
+  animation: sparkleAnim 1s linear forwards;
+}
+
+@keyframes sparkleAnim {
+  0% { transform: scale(0) translateY(0); opacity: 1; }
+  100% { transform: scale(1.5) translateY(-20px); opacity: 0; }
+}
+
+/* Legendary pop animation */
+@keyframes pop {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.legendary.float {
+  animation-name: floatY, pop;
+  animation-duration: 2.2s, 0.4s;
+  animation-timing-function: ease-in-out, ease-out;
+  animation-iteration-count: infinite, 1;
 }
