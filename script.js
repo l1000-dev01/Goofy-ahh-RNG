@@ -51,3 +51,37 @@ document.getElementById("generateBtn").addEventListener("click", () => {
     </span>
   `;
 });
+
+// sparkle generator
+function createSparkles(parent, count = 10) {
+  for (let i = 0; i < count; i++) {
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+
+    // random position near text
+    sparkle.style.left = `${Math.random() * parent.offsetWidth}px`;
+    sparkle.style.top = `${Math.random() * parent.offsetHeight}px`;
+
+    parent.appendChild(sparkle);
+
+    // remove after animation
+    setTimeout(() => sparkle.remove(), 1000);
+  }
+}
+
+document.getElementById("generateBtn").addEventListener("click", () => {
+  const item = getRandomItem();
+  const rarityInfo = rarities[item.rarity];
+  const resultDiv = document.getElementById("result");
+
+  resultDiv.innerHTML = `
+    <span class="${rarityInfo.class}">
+      ${item.name} (${item.rarity}) - ${item.normalizedChance}% odds
+    </span>
+  `;
+
+  // add sparkles for Epic & Legendary
+  if (item.rarity === "Epic" || item.rarity === "Legendary") {
+    createSparkles(resultDiv, item.rarity === "Legendary" ? 20 : 10);
+  }
+});
