@@ -1,33 +1,30 @@
-const words = [
-  "Crystal Blade", "Shadow Cloak", "Phoenix Feather", "Ancient Tome",
-  "Dragon Scale", "Mystic Orb", "Silver Arrow", "Golden Chalice"
+const items = [
+  { name: "Crystal Blade", rarity: "Epic" },
+  { name: "Shadow Cloak", rarity: "Rare" },
+  { name: "Phoenix Feather", rarity: "Legendary" },
+  { name: "Ancient Tome", rarity: "Common" },
+  { name: "Dragon Scale", rarity: "Epic" },
+  { name: "Mystic Orb", rarity: "Rare" },
+  { name: "Silver Arrow", rarity: "Common" },
+  { name: "Golden Chalice", rarity: "Legendary" }
 ];
 
-const rarities = [
-  { name: "Common", class: "common", chance: 60 },
-  { name: "Rare", class: "rare", chance: 25 },
-  { name: "Epic", class: "epic", chance: 10 },
-  { name: "Legendary", class: "legendary", chance: 5 }
-];
+// rarity styles
+const rarities = {
+  Common: { class: "common" },
+  Rare: { class: "rare" },
+  Epic: { class: "epic" },
+  Legendary: { class: "legendary" }
+};
 
-function getRandomWord() {
-  return words[Math.floor(Math.random() * words.length)];
+function getRandomItem() {
+  return items[Math.floor(Math.random() * items.length)];
 }
 
-function getRarity() {
-  const roll = Math.random() * 100;
-  let cumulative = 0;
-  for (let rarity of rarities) {
-    cumulative += rarity.chance;
-    if (roll <= cumulative) return rarity;
-  }
-  return rarities[0]; // fallback
-}
+document.getElementById("generateBtn").addEventListener("click", () => {
+  const item = getRandomItem();
+  const rarityInfo = rarities[item.rarity];
+  const resultDiv = document.getElementById("result");
 
-document.getElementById('generateBtn').addEventListener('click', () => {
-  const word = getRandomWord();
-  const rarity = getRarity();
-  const resultDiv = document.getElementById('result');
-  resultDiv.textContent = `${word} (${rarity.name})`;
-  resultDiv.className = `result ${rarity.class}`;
+  resultDiv.innerHTML = `<span class="${rarityInfo.class}">${item.name} (${item.rarity})</span>`;
 });
