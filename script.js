@@ -34,9 +34,14 @@ function getRandomItem() {
     roll -= item.chance;
   }
 
-  return { ...items[0], normalizedChance: ((items[0].chance / total) * 100).toFixed(2) };
+  const fallback = items[0];
+  return {
+    ...fallback,
+    normalizedChance: ((fallback.chance / total) * 100).toFixed(2)
+  };
 }
 
+// Floating sparkles
 function createSparkles(parent, count = 10) {
   for (let i = 0; i < count; i++) {
     const sparkle = document.createElement("div");
