@@ -82,6 +82,7 @@ button:hover {
 .rare { color: #00bfff; }
 .epic { color: #a020f0; }
 .legendary { color: #ffa500; }
+.mythic { color: #b80f0a; }
 
 .sparkle {
   position: absolute;
