@@ -89,7 +89,11 @@ function updateLeaderboard(word = null, rarity = null) {
       const r = itemInfo.rarity;
       const rarityInfo = rarities[r];
       if (rarityInfo) {
-        html += `<div class="leaderboard-item ${rarityInfo.class}">${wordKey}: ${leaderboard[wordKey]}</div>`;
+        html += `
+  <div class="leaderboard-item ${rarityInfo.class}">
+    <span>${wordKey}</span>
+    <span class="item-count">${leaderboard[wordKey]}</span>
+  </div>`
       }
     }
   });
