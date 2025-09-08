@@ -62,43 +62,50 @@ button:hover {
   color: #ffa500;
 }
 
-/* Pulse glow for Epic */
+/* keep the top of your existing file (body, container, etc.) */
+
+/* result box */
+.result {
+  margin-top: 1.5rem;
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Rarity Colors — crisp, no blur */
+.common {
+  color: #a0a0a0;
+}
+
+.rare {
+  color: #00bfff;
+}
+
 .epic {
   color: #a020f0;
-  text-shadow: 0 0 10px #8000ff, 0 0 20px #c000ff;
-  animation: epicGlow 1.5s infinite alternate;
 }
 
-@keyframes epicGlow {
-  from { text-shadow: 0 0 5px #8000ff, 0 0 15px #c000ff; }
-  to   { text-shadow: 0 0 20px #a020f0, 0 0 30px #ff00ff; }
-}
-
-/* Fiery glow for Legendary */
 .legendary {
   color: #ffa500;
-  text-shadow: 0 0 10px #ff7500, 0 0 20px #ffae00;
-  animation: legendaryGlow 1.2s infinite alternate;
 }
 
-@keyframes legendaryGlow {
-  from { text-shadow: 0 0 10px #ff7500, 0 0 20px #ffae00; }
-  to   { text-shadow: 0 0 25px #ffb400, 0 0 40px #ffd700; }
+/* Floating animation applied to the rolled word */
+.float {
+  display: inline-block;           /* allows transforms without affecting layout */
+  animation: floatY 3s ease-in-out infinite;
+  will-change: transform;
+  -webkit-font-smoothing: antialiased; /* improves crispness on some browsers */
 }
 
-/* Sparkle effect */
-.sparkle {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: white;
-  border-radius: 50%;
-  opacity: 0.8;
-  pointer-events: none;
-  animation: sparkleAnim 1s linear forwards;
-}
+/* Slightly faster float for Epic / Legendary to feel more lively */
+.epic.float { animation-duration: 2.6s; }
+.legendary.float { animation-duration: 2.2s; }
 
-@keyframes sparkleAnim {
-  from { transform: scale(0) translateY(0); opacity: 1; }
-  to   { transform: scale(1.5) translateY(-30px); opacity: 0; }
+/* Float keyframes: gentle vertical movement */
+@keyframes floatY {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-8px); } /* change -8px to -4px / -12px for smaller/larger float */
+  100% { transform: translateY(0); }
 }
