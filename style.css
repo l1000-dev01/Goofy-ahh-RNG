@@ -44,6 +44,8 @@ button:hover {
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
+  position: relative; /* Add this line */
+  overflow: hidden; /* Optional: to ensure sparkles don't go outside the box */
 }
 
 /* Floating animation */
