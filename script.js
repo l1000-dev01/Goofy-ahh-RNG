@@ -1,19 +1,21 @@
 const items = [
-  { name: "Ancient Tome", rarity: "Common", chance: 50 },
-  { name: "Silver Arrow", rarity: "Common", chance: 25 },
-  { name: "Shadow Cloak", rarity: "Rare", chance: 15 },
-  { name: "Mystic Orb", rarity: "Rare", chance: 10 },
-  { name: "Crystal Blade", rarity: "Epic", chance: 7 },
-  { name: "Dragon Scale", rarity: "Epic", chance: 5 },
-  { name: "Phoenix Feather", rarity: "Legendary", chance: 2 },
-  { name: "Golden Chalice", rarity: "Legendary", chance: 1 }
+  { name: "Conrad", rarity: "Common", chance: 50 },
+  { name: "Mustarddd", rarity: "Common", chance: 25 },
+  { name: "6 or 7", rarity: "Rare", chance: 15 },
+  { name: "Energetic Harvey", rarity: "Rare", chance: 10 },
+  { name: "Conrads Mum", rarity: "Epic", chance: 7 },
+  { name: "Sigma Boy", rarity: "Epic", chance: 5 },
+  { name: "Tung sahur", rarity: "Legendary", chance: 2 },
+  { name: "Coolboy Alyan", rarity: "Legendary", chance: 1 },
+  { name: "Test Mythic", rarity: "Mythic", chance: 50 }
 ];
 
 const rarities = {
   Common: { class: "common", rank: 1 },
   Rare: { class: "rare", rank: 2 },
   Epic: { class: "epic", rank: 3 },
-  Legendary: { class: "legendary", rank: 4 }
+  Legendary: { class: "legendary", rank: 4 },
+  Mythic: { class: "mythic", rank: 5 }
 };
 
 // Load leaderboard and best word
