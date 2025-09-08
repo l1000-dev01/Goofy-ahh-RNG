@@ -61,3 +61,44 @@ button:hover {
 .legendary {
   color: #ffa500;
 }
+
+/* Pulse glow for Epic */
+.epic {
+  color: #a020f0;
+  text-shadow: 0 0 10px #8000ff, 0 0 20px #c000ff;
+  animation: epicGlow 1.5s infinite alternate;
+}
+
+@keyframes epicGlow {
+  from { text-shadow: 0 0 5px #8000ff, 0 0 15px #c000ff; }
+  to   { text-shadow: 0 0 20px #a020f0, 0 0 30px #ff00ff; }
+}
+
+/* Fiery glow for Legendary */
+.legendary {
+  color: #ffa500;
+  text-shadow: 0 0 10px #ff7500, 0 0 20px #ffae00;
+  animation: legendaryGlow 1.2s infinite alternate;
+}
+
+@keyframes legendaryGlow {
+  from { text-shadow: 0 0 10px #ff7500, 0 0 20px #ffae00; }
+  to   { text-shadow: 0 0 25px #ffb400, 0 0 40px #ffd700; }
+}
+
+/* Sparkle effect */
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  pointer-events: none;
+  animation: sparkleAnim 1s linear forwards;
+}
+
+@keyframes sparkleAnim {
+  from { transform: scale(0) translateY(0); opacity: 1; }
+  to   { transform: scale(1.5) translateY(-30px); opacity: 0; }
+}
