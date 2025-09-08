@@ -16,11 +16,10 @@ const rarities = {
   Legendary: { class: "legendary", rank: 4 }
 };
 
-// retrieve leaderboard & best word
+// Local storage leaderboard
 let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || {};
 let bestWord = JSON.parse(localStorage.getItem("bestWord")) || null;
 
-// get normalized chance
 function getRandomItem() {
   const total = items.reduce((sum, item) => sum + item.chance, 0);
   let roll = Math.random() * total;
@@ -35,14 +34,9 @@ function getRandomItem() {
     roll -= item.chance;
   }
 
-  const fallback = items[0];
-  return {
-    ...fallback,
-    normalizedChance: ((fallback.chance / total) * 100).toFixed(2)
-  };
+  return { ...items[0], normalizedChance: ((items[0].chance / total) * 100).toFixed(2) };
 }
 
-// floating sparkles
 function createSparkles(parent, count = 10) {
   for (let i = 0; i < count; i++) {
     const sparkle = document.createElement("div");
@@ -54,14 +48,11 @@ function createSparkles(parent, count = 10) {
   }
 }
 
-// update leaderboard display
 function updateLeaderboard(word = null, rarity = null) {
-  // increment word count if new roll
   if (word) {
     if (!leaderboard[word]) leaderboard[word] = 0;
     leaderboard[word]++;
 
-    // update best word by rarity
     if (!bestWord || rarities[rarity].rank > rarities[bestWord.rarity].rank) {
       bestWord = { word, rarity };
     }
@@ -71,8 +62,8 @@ function updateLeaderboard(word = null, rarity = null) {
   }
 
   const lbDiv = document.getElementById("leaderboard");
+  let html = "<h3>Leaderboard</h3>";
 
-  let html = "";
   if (bestWord) {
     html += `<div><strong>Best Word:</strong> <span class="${rarities[bestWord.rarity].class}">${bestWord.word} (${bestWord.rarity})</span></div>`;
   }
@@ -86,7 +77,6 @@ function updateLeaderboard(word = null, rarity = null) {
   lbDiv.innerHTML = html;
 }
 
-// generate button click
 document.getElementById("generateBtn").addEventListener("click", () => {
   const item = getRandomItem();
   const rarityInfo = rarities[item.rarity];
@@ -104,5 +94,5 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   updateLeaderboard(item.name, item.rarity);
 });
 
-// initialize leaderboard on page load
+// Initialize leaderboard on page load
 updateLeaderboard();
