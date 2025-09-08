@@ -1,3 +1,4 @@
+/* --- Body / container --- */
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -43,78 +44,31 @@ button:hover {
   font-weight: bold;
   padding: 1rem;
   border-radius: 8px;
-}
-
-/* Rarity Colors */
-.common {
-  color: #a0a0a0;
-}
-
-.rare {
-  color: #00bfff;
-}
-
-.epic {
-  color: #a020f0;
-}
-
-.legendary {
-  color: #ffa500;
-}
-
-/* keep the top of your existing file (body, container, etc.) */
-
-/* result box */
-.result {
-  margin-top: 1.5rem;
-  font-size: 2rem;
-  font-weight: bold;
-  padding: 1rem;
-  border-radius: 8px;
   text-align: center;
 }
 
-/* Rarity Colors — crisp, no blur */
-.common {
-  color: #a0a0a0;
-}
-
-.rare {
-  color: #00bfff;
-}
-
-/* keep existing common/rare styles from before */
-
-.epic {
-  color: #a020f0;
-  text-shadow: 0 0 2px #d080ff;
-}
-
-.legendary {
-  color: #ffa500;
-  text-shadow: 0 0 2px #ffd700;
-}
-
-/* Floating animation for all */
+/* --- Floating animation --- */
 .float {
   display: inline-block;
   animation: floatY 3s ease-in-out infinite;
-  will-change: transform;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* Slightly faster for Epic / Legendary */
 .epic.float { animation-duration: 2.6s; }
 .legendary.float { animation-duration: 2.2s; }
 
-/* Float keyframes */
 @keyframes floatY {
-  0%   { transform: translateY(0); }
-  50%  { transform: translateY(-8px); }
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
   100% { transform: translateY(0); }
 }
 
-/* Sparkles for Epic/Legendary */
+/* --- Rarity Colors --- */
+.common { color: #a0a0a0; }
+.rare { color: #00bfff; }
+.epic { color: #a020f0; }
+.legendary { color: #ffa500; }
+
+/* --- Sparkles --- */
 .sparkle {
   position: absolute;
   width: 6px;
@@ -130,21 +84,7 @@ button:hover {
   100% { transform: scale(1.5) translateY(-20px); opacity: 0; }
 }
 
-/* Legendary pop animation */
-@keyframes pop {
-  0% { transform: scale(0.8); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
-}
-
-.legendary.float {
-  animation-name: floatY, pop;
-  animation-duration: 2.2s, 0.4s;
-  animation-timing-function: ease-in-out, ease-out;
-  animation-iteration-count: infinite, 1;
-}
-
-/* Top-right leaderboard */
+/* --- Leaderboard --- */
 .leaderboard {
   position: fixed;
   top: 20px;
@@ -152,7 +92,7 @@ button:hover {
   width: 220px;
   max-height: 90vh;
   overflow-y: auto;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.6);
   padding: 1rem;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0,0,0,0.7);
@@ -171,9 +111,3 @@ button:hover {
 .leaderboard-item {
   margin: 0.2rem 0;
 }
-
-/* Keep rarity colors consistent */
-.common { color: #a0a0a0; }
-.rare { color: #00bfff; }
-.epic { color: #a020f0; }
-.legendary { color: #ffa500; }
