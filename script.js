@@ -9,7 +9,7 @@ const items = [
   { name: "Golden Chalice", rarity: "Legendary", chance: 1 }
 ];
 
-// rarity styles
+// rarity -> class mapping
 const rarities = {
   Common: { class: "common" },
   Rare: { class: "rare" },
@@ -17,14 +17,13 @@ const rarities = {
   Legendary: { class: "legendary" }
 };
 
-// weighted random by item chance
+// weighted random by item chance, returns normalizedChance too
 function getRandomItem() {
   const total = items.reduce((sum, item) => sum + item.chance, 0);
   let roll = Math.random() * total;
 
   for (let item of items) {
     if (roll < item.chance) {
-      // calculate exact normalized odds
       return {
         ...item,
         normalizedChance: ((item.chance / total) * 100).toFixed(2)
@@ -33,10 +32,11 @@ function getRandomItem() {
     roll -= item.chance;
   }
 
-  // fallback (shouldn't hit)
+  // fallback (shouldn't happen)
+  const fallback = items[0];
   return {
-    ...items[0],
-    normalizedChance: ((items[0].chance / total) * 100).toFixed(2)
+    ...fallback,
+    normalizedChance: ((fallback.chance / total) * 100).toFixed(2)
   };
 }
 
@@ -45,43 +45,10 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   const rarityInfo = rarities[item.rarity];
   const resultDiv = document.getElementById("result");
 
+  // Put the floated span inside the result; float class handles animation.
   resultDiv.innerHTML = `
-    <span class="${rarityInfo.class}">
+    <span class="${rarityInfo.class} float">
       ${item.name} (${item.rarity}) - ${item.normalizedChance}% odds
     </span>
   `;
-});
-
-// sparkle generator
-function createSparkles(parent, count = 10) {
-  for (let i = 0; i < count; i++) {
-    const sparkle = document.createElement("div");
-    sparkle.className = "sparkle";
-
-    // random position near text
-    sparkle.style.left = `${Math.random() * parent.offsetWidth}px`;
-    sparkle.style.top = `${Math.random() * parent.offsetHeight}px`;
-
-    parent.appendChild(sparkle);
-
-    // remove after animation
-    setTimeout(() => sparkle.remove(), 1000);
-  }
-}
-
-document.getElementById("generateBtn").addEventListener("click", () => {
-  const item = getRandomItem();
-  const rarityInfo = rarities[item.rarity];
-  const resultDiv = document.getElementById("result");
-
-  resultDiv.innerHTML = `
-    <span class="${rarityInfo.class}">
-      ${item.name} (${item.rarity}) - ${item.normalizedChance}% odds
-    </span>
-  `;
-
-  // add sparkles for Epic & Legendary
-  if (item.rarity === "Epic" || item.rarity === "Legendary") {
-    createSparkles(resultDiv, item.rarity === "Legendary" ? 20 : 10);
-  }
 });
