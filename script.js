@@ -1,38 +1,43 @@
-const items = {
-  Common: ["Ancient Tome", "Silver Arrow"],
-  Rare: ["Shadow Cloak", "Mystic Orb"],
-  Epic: ["Crystal Blade", "Dragon Scale"],
-  Legendary: ["Phoenix Feather", "Golden Chalice"]
-};
-
-const rarities = [
-  { name: "Common", class: "common", chance: 60 },
-  { name: "Rare", class: "rare", chance: 25 },
-  { name: "Epic", class: "epic", chance: 10 },
-  { name: "Legendary", class: "legendary", chance: 5 }
+const items = [
+  { name: "Ancient Tome", rarity: "Common", chance: 30 },
+  { name: "Silver Arrow", rarity: "Common", chance: 30 },
+  { name: "Shadow Cloak", rarity: "Rare", chance: 15 },
+  { name: "Mystic Orb", rarity: "Rare", chance: 10 },
+  { name: "Crystal Blade", rarity: "Epic", chance: 7 },
+  { name: "Dragon Scale", rarity: "Epic", chance: 5 },
+  { name: "Phoenix Feather", rarity: "Legendary", chance: 2 },
+  { name: "Golden Chalice", rarity: "Legendary", chance: 1 }
 ];
 
-// roll for rarity based on chances
-function getRarity() {
-  const roll = Math.random() * 100;
-  let cumulative = 0;
-  for (let rarity of rarities) {
-    cumulative += rarity.chance;
-    if (roll <= cumulative) return rarity;
-  }
-  return rarities[0]; // fallback
-}
+// rarity styles
+const rarities = {
+  Common: { class: "common" },
+  Rare: { class: "rare" },
+  Epic: { class: "epic" },
+  Legendary: { class: "legendary" }
+};
 
-// pick a random word within the chosen rarity
-function getRandomWord(rarityName) {
-  const pool = items[rarityName];
-  return pool[Math.floor(Math.random() * pool.length)];
+// weighted random by item chance
+function getRandomItem() {
+  const total = items.reduce((sum, item) => sum + item.chance, 0);
+  let roll = Math.random() * total;
+
+  for (let item of items) {
+    if (roll < item.chance) return item;
+    roll -= item.chance;
+  }
+
+  return items[0]; // fallback
 }
 
 document.getElementById("generateBtn").addEventListener("click", () => {
-  const rarity = getRarity();
-  const word = getRandomWord(rarity.name);
+  const item = getRandomItem();
+  const rarityInfo = rarities[item.rarity];
   const resultDiv = document.getElementById("result");
 
-  resultDiv.innerHTML = `<span class="${rarity.class}">${word} (${rarity.name})</span>`;
+  resultDiv.innerHTML = `
+    <span class="${rarityInfo.class}">
+      ${item.name} (${item.rarity}) - ${item.chance}% odds
+    </span>
+  `;
 });
