@@ -55,7 +55,8 @@ function updateLeaderboard(word = null, rarity = null) {
   if (word) {
     leaderboard[word] = (leaderboard[word] || 0) + 1;
 
-    if (!bestWord || rarities[rarity].rank > rarities[bestWord.rarity].rank) {
+    // Ensure bestWord is initialized correctly if it's the first word
+    if (!bestWord || !bestWord.rarity || rarities[rarity].rank > rarities[bestWord.rarity].rank) {
       bestWord = { word, rarity };
     }
 
@@ -66,15 +67,32 @@ function updateLeaderboard(word = null, rarity = null) {
   const lbDiv = document.getElementById("leaderboard");
   let html = "<h3>Leaderboard</h3>";
 
-  if (bestWord) {
-    html += `<div><strong>Best Word:</strong> <span class="${rarities[bestWord.rarity].class}">${bestWord.word} (${bestWord.rarity})</span></div>`;
+  if (bestWord && bestWord.word && bestWord.rarity) { // Add checks for bestWord properties
+    const bestRarityInfo = rarities[bestWord.rarity];
+    if (bestRarityInfo) { // Ensure rarity info exists
+      html += `<div><strong>Best Word:</strong> <span class="${bestRarityInfo.class}">${bestWord.word} (${bestWord.rarity})</span></div>`;
+    }
   }
 
-  Object.keys(leaderboard).sort((a,b) => leaderboard[b]-leaderboard[a])
-    .forEach(word => {
-      const r = items.find(i => i.name === word).rarity;
-      html += `<div class="leaderboard-item ${rarities[r].class}">${word}: ${leaderboard[word]}</div>`;
-    });
+  // Sort the leaderboard and then build the list
+  const sortedWords = Object.keys(leaderboard).sort((a, b) => leaderboard[b] - leaderboard[a]);
+
+  sortedWords.forEach(wordKey => {
+    // Safely find the item to get its rarity
+    const itemInfo = items.find(i => i.name === wordKey);
+    if (itemInfo) { // Only display if the item is found
+      const r = itemInfo.rarity;
+      const rarityInfo = rarities[r];
+      if (rarityInfo) { // Ensure rarity info exists
+        html += `<div class="leaderboard-item ${rarityInfo.class}">${wordKey}: ${leaderboard[wordKey]}</div>`;
+      }
+    } else {
+      // Optional: Handle words in localStorage that are no longer in 'items'
+      // console.warn(`Leaderboard contains an item not in current 'items' list: ${wordKey}`);
+      // If you want to display them anyway without rarity styling:
+      // html += `<div class="leaderboard-item">${wordKey}: ${leaderboard[wordKey]}</div>`;
+    }
+  });
 
   lbDiv.innerHTML = html;
 }
