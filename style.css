@@ -99,54 +99,50 @@ button:hover {
   100% { transform: scale(1.5) translateY(-20px); opacity: 0; }
 }
 
-/* --- Leaderboard Styles (Cleaned Up) --- */
+/* --- Leaderboard Styles --- */
 .leaderboard {
   position: fixed;
   top: 20px;
   right: 20px;
-  width: 250px; /* Slightly wider for better readability */
+  width: 250px;
   max-height: 90vh;
   overflow-y: auto;
-  background-color: rgba(0,0,0,0.85); /* Slightly darker background */
-  padding: 1.2rem; /* Increased padding */
-  border-radius: 12px; /* Slightly larger border-radius */
-  box-shadow: 0 0 20px rgba(0,0,0,0.8); /* Stronger shadow */
-  color: #e0e0e0; /* Lighter text color for better contrast */
+  background-color: rgba(0,0,0,0.85);
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  color: #e0e0e0;
   font-family: 'Segoe UI', sans-serif;
-  font-size: 0.95rem; /* Slightly smaller base font size */
-  line-height: 1.4; /* Improved line spacing */
-  border: 1px solid rgba(255,255,255,0.1); /* Subtle border */
+  font-size: 0.95rem;
+  line-height: 1.4;
+  border: 1px solid rgba(255,255,255,0.1);
 }
-
 
 .leaderboard h3 {
   margin-top: 0;
-  margin-bottom: 1rem; /* More space below the heading */
-  font-size: 1.2rem; /* Slightly larger heading */
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
   text-align: center;
-  color: #fff; /* White heading */
-  border-bottom: 1px solid rgba(255,255,255,0.2); /* Separator line */
-  padding-bottom: 0.5rem; /* Space above the separator */
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 0.5rem;
 }
 
-/* Style for the "Best Word" section */
-.leaderboard > div:first-of-type { /* Targets the first div directly inside leaderboard (Best Word) */
-  background-color: rgba(255, 255, 255, 0.08); /* Subtle highlight for best word */
+.leaderboard > div:first-of-type {
+  background-color: rgba(255, 255, 255, 0.08);
   padding: 0.6rem;
   border-radius: 8px;
-  margin-bottom: 1rem; /* Space below Best Word */
+  margin-bottom: 1rem;
   box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
 }
 
 .leaderboard > div:first-of-type strong {
-  color: #00c6ff; /* Highlight "Best Word" label */
+  color: #00c6ff;
 }
 
-
-/* In style.css, within the leaderboard section */
 .leaderboard-item {
-  display: flex; /* Keep this */
-  justify-content: space-between; /* Keep this */
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 0.4rem 0.6rem;
   margin-bottom: 0.3rem;
@@ -157,24 +153,76 @@ button:hover {
 
 .leaderboard-item .item-count {
   font-weight: bold;
-  color: #00c6ff; /* Or any other color to highlight the count */
-  min-width: 20px; /* Give it a minimum width so it aligns nicely */
+  color: #00c6ff;
+  min-width: 20px;
   text-align: right;
 }
 
 .leaderboard-item:hover {
-  background-color: rgba(255, 255, 255, 0.08); /* Hover effect */
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Make item count bold and slightly larger */
-.leaderboard-item::after {
-    content: attr(data-count); /* Not directly used with current JS, but good for custom content */
-    font-weight: bold;
-    font-size: 1rem;
-}
-
-/* Small adjustment for rarity spans within leaderboard items */
 .leaderboard-item span {
     font-weight: bold;
 }
 
+/* --- New Inventory Styles --- */
+.inventory {
+  position: fixed;
+  top: 20px;
+  left: 20px; /* Position to the top left */
+  width: 250px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: rgba(0,0,0,0.85); /* Same as leaderboard */
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.inventory h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  text-align: center;
+  color: #fff;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 0.5rem;
+}
+
+.inventory p { /* Style for "Inventory is empty" message */
+  text-align: center;
+  font-style: italic;
+  color: #aaa;
+}
+
+.inventory-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  margin-bottom: 0.3rem;
+  background-color: rgba(255, 255, 255, 0.03); /* Same as leaderboard items */
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.inventory-item .item-count {
+  font-weight: bold;
+  color: #00c6ff; /* Same as leaderboard item count */
+  min-width: 20px;
+  text-align: right;
+}
+
+.inventory-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.inventory-item span {
+    font-weight: bold;
+}
