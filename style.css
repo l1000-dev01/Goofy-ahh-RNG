@@ -33,8 +33,13 @@ button {
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+button:hover:not(:disabled) { /* Add :not(:disabled) to prevent hover on disabled */
   background-color: #0072ff;
+}
+
+button:disabled { /* Style for disabled button */
+  background-color: #666;
+  cursor: not-allowed;
 }
 
 .result {
@@ -183,6 +188,7 @@ button:hover {
   font-size: 0.95rem;
   line-height: 1.4;
   border: 1px solid rgba(255,255,255,0.1);
+  z-index: 10; /* Ensure inventory is above other elements if needed */
 }
 
 .inventory h3 {
@@ -215,7 +221,6 @@ button:hover {
 .inventory-item .item-count {
   font-weight: bold;
   color: #00c6ff;
-  /* Adjust margin to make space for the button */
   margin-right: 5px;
 }
 
@@ -225,23 +230,123 @@ button:hover {
 
 .inventory-item span {
     font-weight: bold;
-    flex-grow: 1; /* Allow item name to take available space */
+    flex-grow: 1;
 }
 
-/* New: Styles for the remove button */
 .remove-item-btn {
-  background-color: #ff4d4d; /* Red color for delete */
+  background-color: #ff4d4d;
   color: white;
   border: none;
   border-radius: 4px;
   padding: 2px 7px;
   font-size: 0.75rem;
   cursor: pointer;
-  margin-left: 8px; /* Space between count and button */
+  margin-left: 8px;
   transition: background-color 0.2s ease;
-  line-height: 1; /* Adjust line height to make button smaller */
+  line-height: 1;
 }
 
 .remove-item-btn:hover {
-  background-color: #cc0000; /* Darker red on hover */
+  background-color: #cc0000;
+}
+
+/* --- New: Auto Roll Controls Styles --- */
+.auto-roll-controls {
+  position: fixed;
+  top: 20px;
+  /* Centering logic: 50% from left, then half of its own width back */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0,0,0,0.85);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.8);
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.9rem;
+  display: flex; /* Use flexbox for layout */
+  align-items: center; /* Vertically align items */
+  gap: 15px; /* Space between elements */
+  z-index: 10; /* Ensure it's above other elements */
+}
+
+.auto-roll-controls h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.filter-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-section label {
+  white-space: nowrap; /* Prevent label from wrapping */
+}
+
+.auto-roll-controls select {
+  padding: 5px 8px;
+  border-radius: 5px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background-color: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  -webkit-appearance: none; /* Remove default arrow on select */
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px 16px;
+}
+
+.auto-roll-controls select:focus {
+  outline: none;
+  border-color: #00c6ff;
+  box-shadow: 0 0 5px rgba(0, 198, 255, 0.5);
+}
+
+/* --- Toggle Switch Styles --- */
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 26px;
+}
+
+.toggle-switch-checkbox {
+  display: none;
+}
+
+.toggle-switch-label {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 13px;
+  position: relative;
+  transition: background-color 0.2s;
+}
+
+.toggle-switch-label::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.toggle-switch-checkbox:checked + .toggle-switch-label {
+  background-color: #00c6ff; /* On color */
+}
+
+.toggle-switch-checkbox:checked + .toggle-switch-label::after {
+  transform: translateX(24px); /* Move knob to the right */
 }
