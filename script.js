@@ -19,9 +19,10 @@ const rarities = {
   Mythic: { class: "mythic", rank: 5 }
 };
 
-// Load leaderboard and best word
+// Load leaderboard, best word, and inventory
 let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || {};
 let bestWord = JSON.parse(localStorage.getItem("bestWord")) || null;
+let inventory = JSON.parse(localStorage.getItem("inventory")) || {}; // New: Inventory storage
 
 // Random item with normalized chance
 function getRandomItem() {
@@ -104,6 +105,56 @@ function updateLeaderboard(word = null, rarity = null) {
   lbDiv.innerHTML = html;
 }
 
+// New: Update Inventory Display
+function updateInventory(item = null) {
+  if (item) {
+    // Add item to inventory or increment count
+    if (inventory[item.name]) {
+      inventory[item.name].count++;
+    } else {
+      inventory[item.name] = {
+        rarity: item.rarity,
+        count: 1
+      };
+    }
+    localStorage.setItem("inventory", JSON.stringify(inventory));
+  }
+
+  const invDiv = document.getElementById("inventory");
+  let html = "<h3>Inventory</h3>";
+
+  const sortedInventoryItems = Object.keys(inventory).sort((a, b) => {
+    // Sort by rarity rank (Mythic > Legendary > Epic > Rare > Common)
+    const rarityA = rarities[inventory[a].rarity].rank;
+    const rarityB = rarities[inventory[b].rarity].rank;
+    if (rarityA !== rarityB) {
+      return rarityB - rarityA; // Descending rarity
+    }
+    // Then by count (descending)
+    return inventory[b].count - inventory[a].count;
+  });
+
+  if (sortedInventoryItems.length === 0) {
+    html += "<p>Your inventory is empty.</p>";
+  } else {
+    sortedInventoryItems.forEach(itemName => {
+      const itemData = inventory[itemName];
+      const rarityInfo = rarities[itemData.rarity];
+      if (rarityInfo) {
+        html += `
+          <div class="inventory-item ${rarityInfo.class}">
+            <span>${itemName}</span>
+            <span class="item-count">x${itemData.count}</span>
+          </div>
+        `;
+      }
+    });
+  }
+
+  invDiv.innerHTML = html;
+}
+
+
 // Generate button
 document.getElementById("generateBtn").addEventListener("click", () => {
   const item = getRandomItem();
@@ -121,7 +172,9 @@ document.getElementById("generateBtn").addEventListener("click", () => {
   if (item.rarity === "Legendary") createSparkles(sparkleContainer, 20);
 
   updateLeaderboard(item.name, item.rarity);
+  updateInventory(item); // New: Update inventory after generating an item
 });
 
-// Initialize leaderboard on load
+// Initialize leaderboard and inventory on load
 updateLeaderboard();
+updateInventory(); // New: Initialize inventory on load
