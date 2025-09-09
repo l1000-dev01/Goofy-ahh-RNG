@@ -7,15 +7,35 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="inventory" class="inventory"></div> <!-- New Inventory container -->
+  <div id="inventory" class="inventory"></div> <!-- Inventory container -->
+
+  <!-- New: Auto Roll Controls -->
+  <div id="auto-roll-controls" class="auto-roll-controls">
+    <h3>Auto Roll</h3>
+    <div class="toggle-switch">
+      <input type="checkbox" id="autoRollToggle" class="toggle-switch-checkbox">
+      <label for="autoRollToggle" class="toggle-switch-label"></label>
+    </div>
+
+    <div class="filter-section">
+      <label for="rarityFilter">Filter out:</label>
+      <select id="rarityFilter">
+        <option value="none">None</option>
+        <option value="Common">Common</option>
+        <option value="Rare">Rare</option>
+        <option value="Epic">Epic</option>
+        <option value="Legendary">Legendary</option>
+      </select>
+    </div>
+  </div>
 
   <div class="container">
     <h1>✨ Goofy ahh RNG</h1>
     <p>Click to reveal a random item with rarity</p>
     <button id="generateBtn">Generate</button>
     <div id="result" class="result">
-      <div id="item-display">?</div> <!-- New div for the item text -->
-      <div id="sparkle-container"></div> <!-- New div for sparkles -->
+      <div id="item-display">?</div>
+      <div id="sparkle-container"></div>
     </div>
   </div>
 
